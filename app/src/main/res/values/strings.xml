@@ -14,4 +14,6 @@
 
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_ok">OK</string>
+
+    <string name="editor_button_flip_h">Flip H</string>
 </resources>
