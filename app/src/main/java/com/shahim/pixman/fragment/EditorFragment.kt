@@ -3,6 +3,7 @@ package com.shahim.pixman.fragment
 import android.R.attr.bitmap
 import android.R.attr.opacity
 import android.content.Context
+import android.content.res.ColorStateList
 import android.database.Cursor
 import android.graphics.*
 import android.net.Uri
@@ -11,6 +12,8 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.shahim.pixman.R
@@ -51,6 +54,7 @@ class EditorFragment : Fragment() {
     lateinit var workImage : Bitmap
 
     var undoStack : ArrayList<Bitmap> = ArrayList()
+    var redoStack : ArrayList<Bitmap> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -74,10 +78,13 @@ class EditorFragment : Fragment() {
         tool_text_add.setOnClickListener { addTextLogo() }
 
         tool_opacity_50.setOnClickListener { reduceAlpha() }
+
+        history_undo.setOnClickListener { undo() }
+        history_redo.setOnClickListener { redo() }
     }
 
     private fun flipH() {
-        addToUndoStack(workImage)
+        addToUndoStack()
         val matrix = Matrix()
         matrix.postScale(-1f, 1f, workImage.width/2f, workImage.height/2f)
         workImage = Bitmap.createBitmap(workImage,0,0,workImage.width,workImage.height,matrix,true)
@@ -85,7 +92,7 @@ class EditorFragment : Fragment() {
     }
 
     private fun flipV() {
-        addToUndoStack(workImage)
+        addToUndoStack()
         val matrix = Matrix()
         matrix.postScale(1f, -1f, workImage.width/2f, workImage.height/2f)
         workImage = Bitmap.createBitmap(workImage,0,0,workImage.width,workImage.height,matrix,true)
@@ -93,7 +100,7 @@ class EditorFragment : Fragment() {
     }
 
     private fun reduceAlpha() {
-        addToUndoStack(workImage)
+        addToUndoStack()
 
         val mutableBitmap: Bitmap = if (workImage.isMutable) workImage else workImage.copy(
             Bitmap.Config.ARGB_8888,
@@ -107,7 +114,7 @@ class EditorFragment : Fragment() {
     }
 
     private fun addTextLogo() {
-        addToUndoStack(workImage)
+        addToUndoStack()
         val padding = workImage.width/20
 
         //Add Image
@@ -152,9 +159,50 @@ class EditorFragment : Fragment() {
         patient.setImageBitmap(workImage)
     }
 
-    private fun addToUndoStack(img: Bitmap) {
+    private fun addToUndoStack(clearRedo: Boolean = true) {
         undoStack.add(workImage.copy(workImage.config,true))
         if(undoStack.size>3) undoStack.removeAt(0)
+        if(clearRedo) redoStack.clear()
+        refreshHistoryButton(history_undo,undoStack)
+        refreshHistoryButton(history_redo,redoStack)
+    }
+
+    private fun undo() {
+        if(undoStack.size>0) {
+            addToRedoStack()
+            workImage = undoStack.removeAt(undoStack.size-1)
+        }
+        refreshHistoryButton(history_undo,undoStack)
+        updateWorkImage()
+    }
+
+    private fun refreshHistoryButton(btn: ImageButton, stack: ArrayList<Bitmap>) {
+        context?.let {
+            if(stack.size==0) {
+                btn.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(it,R.color.textColorDisabled))
+                btn.isClickable = false
+            }
+            else {
+                btn.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(it,R.color.textColorPrimary))
+                btn.isClickable = true
+            }
+        }
+    }
+
+    private fun addToRedoStack() {
+        redoStack.add(workImage.copy(workImage.config,true))
+        if(redoStack.size>3) redoStack.removeAt(0)
+        refreshHistoryButton(history_redo,redoStack)
+    }
+
+    private fun redo() {
+        if(redoStack.size>0) {
+            addToUndoStack(false)
+            workImage = redoStack.removeAt(redoStack.size-1)
+        }
+        refreshHistoryButton(history_undo,undoStack)
+        refreshHistoryButton(history_redo,redoStack)
+        updateWorkImage()
     }
 
     fun getOrientation(context: Context, photoUri: Uri): Int {
