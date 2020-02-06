@@ -10,8 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_thin"
+        android:textColor="@color/textColorPrimary"
         android:text="@string/home_greeting"
-        android:textSize="22sp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/image_picker_prompt"
         app:layout_constraintTop_toTopOf="parent"
         fancy:layout_constraintEnd_toEndOf="parent"
         fancy:layout_constraintStart_toStartOf="parent" />
@@ -26,21 +28,34 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/image_picker_prompt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:gravity="center"
         android:orientation="vertical"
+        android:padding="@dimen/activity_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_margin"
+            android:adjustViewBounds="true"
+            android:elevation="2dp"
+            android:src="@drawable/ic_picture_frame" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tap to open an image"
-            android:textColor="@color/textColorPrimary" />
+            android:layout_marginTop="@dimen/activity_margin"
+            android:text="@string/home_intro_prompt"
+            android:textColor="@color/textColorSecondary" />
 
     </LinearLayout>
 

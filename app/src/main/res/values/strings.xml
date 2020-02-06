@@ -4,4 +4,6 @@
 
     <string name="home_greeting">Welcome to Pixman!</string>
     <string name="home_greeting_sub">Choose an image to get started</string>
+
+    <string name="home_intro_prompt">Tap to open an image</string>
 </resources>
