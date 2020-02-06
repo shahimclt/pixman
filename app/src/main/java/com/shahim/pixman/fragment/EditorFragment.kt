@@ -1,5 +1,6 @@
 package com.shahim.pixman.fragment
 
+import android.R.attr.angle
 import android.content.Context
 import android.database.Cursor
 import android.graphics.*
@@ -67,16 +68,29 @@ class EditorFragment : Fragment() {
         patient.setImageBitmap(ogImage)
 
         tool_flip_h.setOnClickListener { flipH() }
+        tool_flip_v.setOnClickListener { flipV() }
 
         tool_text_add.setOnClickListener { addTextLogo() }
     }
 
     private fun flipH() {
+        val matrix = Matrix()
+        matrix.postScale(-1f, 1f, workImage.width/2f, workImage.height/2f);
+        addToUndoStack(workImage)
+        workImage = Bitmap.createBitmap(workImage,0,0,workImage.width,workImage.height,matrix,true)
+        updateWorkImage()
+    }
 
+    private fun flipV() {
+        val matrix = Matrix()
+        matrix.postScale(1f, -1f, workImage.width/2f, workImage.height/2f);
+        addToUndoStack(workImage)
+        workImage = Bitmap.createBitmap(workImage,0,0,workImage.width,workImage.height,matrix,true)
+        updateWorkImage()
     }
 
     private fun addTextLogo() {
-
+        addToUndoStack(workImage)
         val padding = workImage.width/20
 
         //Add Image
@@ -87,7 +101,6 @@ class EditorFragment : Fragment() {
 
         logo = Bitmap.createScaledBitmap(logo,logoW.toInt(),logoH.toInt(),false)
 
-        addToUndoStack(workImage)
         val canvas = Canvas(workImage)
         val x = workImage.width - padding - logo.width
         val y = workImage.height - padding - logo.height
