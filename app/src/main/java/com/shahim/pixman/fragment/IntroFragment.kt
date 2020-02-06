@@ -1,15 +1,15 @@
 package com.shahim.pixman.fragment
 
 import android.Manifest
-import android.content.DialogInterface
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -25,6 +25,16 @@ import kotlinx.android.synthetic.main.fragment_intro.*
 const val PICK_IMAGE = 2
 
 class IntroFragment : Fragment() {
+
+    private lateinit var callback: OnImagePickedListener
+
+    fun setOnImagePickedListener(callback: OnImagePickedListener) {
+        this.callback = callback
+    }
+    interface OnImagePickedListener {
+        fun onImagePicked(image: Uri)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,11 +53,22 @@ class IntroFragment : Fragment() {
 
     private fun openFile() {
         checkFilePermission {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
+            val intent = Intent(Intent.ACTION_PICK).apply {
                 type = "image/*"
+                val mimeTypes = arrayOf("image/jpeg", "image/png")
+                putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
             }
             startActivityForResult(intent, PICK_IMAGE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) when (requestCode) {
+            PICK_IMAGE -> {
+                //data.getData returns the content URI for the selected Image
+                val selectedImage: Uri? = data?.data
+                callback.let { selectedImage?.let { it1 -> callback.onImagePicked(it1) } }
+            }
         }
     }
 
