@@ -1,6 +1,7 @@
 package com.shahim.pixman.fragment
 
-import android.R.attr.angle
+import android.R.attr.bitmap
+import android.R.attr.opacity
 import android.content.Context
 import android.database.Cursor
 import android.graphics.*
@@ -71,21 +72,37 @@ class EditorFragment : Fragment() {
         tool_flip_v.setOnClickListener { flipV() }
 
         tool_text_add.setOnClickListener { addTextLogo() }
+
+        tool_opacity_50.setOnClickListener { reduceAlpha() }
     }
 
     private fun flipH() {
-        val matrix = Matrix()
-        matrix.postScale(-1f, 1f, workImage.width/2f, workImage.height/2f);
         addToUndoStack(workImage)
+        val matrix = Matrix()
+        matrix.postScale(-1f, 1f, workImage.width/2f, workImage.height/2f)
         workImage = Bitmap.createBitmap(workImage,0,0,workImage.width,workImage.height,matrix,true)
         updateWorkImage()
     }
 
     private fun flipV() {
-        val matrix = Matrix()
-        matrix.postScale(1f, -1f, workImage.width/2f, workImage.height/2f);
         addToUndoStack(workImage)
+        val matrix = Matrix()
+        matrix.postScale(1f, -1f, workImage.width/2f, workImage.height/2f)
         workImage = Bitmap.createBitmap(workImage,0,0,workImage.width,workImage.height,matrix,true)
+        updateWorkImage()
+    }
+
+    private fun reduceAlpha() {
+        addToUndoStack(workImage)
+
+        val mutableBitmap: Bitmap = if (workImage.isMutable) workImage else workImage.copy(
+            Bitmap.Config.ARGB_8888,
+            true
+        )
+        val canvas = Canvas(mutableBitmap)
+        val colour = 80 and 0xFF shl 24
+        canvas.drawColor(colour, PorterDuff.Mode.DST_IN)
+        workImage = mutableBitmap
         updateWorkImage()
     }
 
