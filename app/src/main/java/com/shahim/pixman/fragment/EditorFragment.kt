@@ -1,7 +1,6 @@
 package com.shahim.pixman.fragment
 
-import android.R.attr.bitmap
-import android.R.attr.opacity
+import android.R.attr.button
 import android.content.Context
 import android.content.res.ColorStateList
 import android.database.Cursor
@@ -10,9 +9,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -81,6 +81,24 @@ class EditorFragment : Fragment() {
 
         history_undo.setOnClickListener { undo() }
         history_redo.setOnClickListener { redo() }
+
+        action_compare.setOnTouchListener(OnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    toggleOG(true)
+                    return@OnTouchListener true
+                }
+                MotionEvent.ACTION_UP -> {
+                    toggleOG(false)
+                    return@OnTouchListener true
+                }
+            }
+            false
+        })
+    }
+
+    private fun toggleOG(og:Boolean) {
+        if(og) patient.setImageBitmap(ogImage) else updateWorkImage()
     }
 
     private fun flipH() {

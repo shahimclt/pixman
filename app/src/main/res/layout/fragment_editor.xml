@@ -12,6 +12,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@color/transparent"
+        android:foreground="?android:attr/selectableItemBackground"
         android:clickable="false"
         android:tint="@color/textColorPrimary"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +33,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
             android:tint="@color/textColorDisabled"
             android:clickable="false"
             app:srcCompat="@drawable/ic_undo_24dp" />
@@ -41,6 +43,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
             android:tint="@color/textColorDisabled"
             android:clickable="false"
             app:srcCompat="@drawable/ic_redo_24dp" />
@@ -51,6 +54,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@color/transparent"
+        android:foreground="?android:attr/selectableItemBackground"
         android:clickable="false"
         android:tint="@color/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,6 +90,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
             android:tint="@color/textColorPrimary"
             app:srcCompat="@drawable/ic_flip_24dp"
             />
@@ -96,6 +101,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
             android:tint="@color/textColorPrimary"
             app:srcCompat="@drawable/ic_flip_24dp"
             android:rotation="-90"
@@ -107,6 +113,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
             android:tint="@color/textColorPrimary"
             app:srcCompat="@drawable/ic_opacity_24dp"
             />
@@ -117,6 +124,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
             android:tint="@color/textColorPrimary"
             app:srcCompat="@drawable/ic_format_color_text_24dp"
             />
