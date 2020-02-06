@@ -2,15 +2,14 @@ package com.shahim.pixman.fragment
 
 import android.content.Context
 import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
+import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.shahim.pixman.R
 import kotlinx.android.synthetic.main.fragment_editor.*
@@ -47,6 +46,9 @@ class EditorFragment : Fragment() {
     lateinit var imageUri: Uri
 
     lateinit var ogImage : Bitmap
+    lateinit var workImage : Bitmap
+
+    var undoStack : ArrayList<Bitmap> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,16 +63,7 @@ class EditorFragment : Fragment() {
     }
 
     private fun init() {
-//        patient.setImageURI(imageUri)
-
-        val ims = activity?.contentResolver?.openInputStream(imageUri)
-        ogImage = BitmapFactory.decodeStream(ims)
-        context?.let {
-            val rtImage = rotateViaMatrix(ogImage,getOrientation(it,imageUri))
-            rtImage?.let { ogImage = rtImage }
-        }
-        ims?.close()
-
+        loadOriginalImage()
         patient.setImageBitmap(ogImage)
 
         tool_flip_h.setOnClickListener { flipH() }
@@ -84,6 +77,54 @@ class EditorFragment : Fragment() {
 
     private fun addTextLogo() {
 
+        val padding = workImage.width/20
+
+        //Add Image
+        var logo = BitmapFactory.decodeResource(resources, R.drawable.im_gg_logo)
+
+        val logoW = workImage.width.toFloat() / 20 * 5
+        val logoH = logo.height.toFloat() / logo.width * logoW
+
+        logo = Bitmap.createScaledBitmap(logo,logoW.toInt(),logoH.toInt(),false)
+
+        addToUndoStack(workImage)
+        val canvas = Canvas(workImage)
+        val x = workImage.width - padding - logo.width
+        val y = workImage.height - padding - logo.height
+        canvas.drawBitmap(logo, x.toFloat(), y.toFloat(), Paint())
+
+        //Add Text
+        val paint = Paint()
+        paint.style = Paint.Style.FILL
+        context?.let { paint.color =  ContextCompat.getColor(it,R.color.black) }
+
+        val textSize = workImage.width / 20
+        paint.textSize = textSize.toFloat()
+        val xt = padding
+        val yt = workImage.height - padding - ((paint.descent())/2)
+        canvas.drawText("GreedyGame", xt.toFloat(), yt, paint)
+
+        updateWorkImage()
+    }
+
+    private fun loadOriginalImage() {
+        val ims = activity?.contentResolver?.openInputStream(imageUri)
+        ogImage = BitmapFactory.decodeStream(ims)
+        context?.let {
+            val rtImage = rotateViaMatrix(ogImage,getOrientation(it,imageUri))
+            rtImage?.let { ogImage = rtImage }
+        }
+        ims?.close()
+        workImage = ogImage.copy(ogImage.config,true)
+    }
+
+    private fun updateWorkImage() {
+        patient.setImageBitmap(workImage)
+    }
+
+    private fun addToUndoStack(img: Bitmap) {
+        undoStack.add(workImage.copy(workImage.config,true))
+        if(undoStack.size>3) undoStack.removeAt(0)
     }
 
     fun getOrientation(context: Context, photoUri: Uri): Int {
