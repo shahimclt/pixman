@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00B3CC</color>
+    <color name="colorPrimaryLight">#0AE1FF</color>
+    <color name="colorPrimaryDark">#008193</color>
+    <color name="colorPrimaryDarker">#006472</color>
+
+    <color name="colorOnPrimary">#FEFEFE</color>
+
+    <color name="colorTertiary">#FFCE00</color>
+    <color name="colorTertiaryLight">#FFCF06</color>
+    <color name="colorTertiaryDark">#F0C200</color>
+    <color name="colorTertiaryDarker">#BB9700</color>
+
+    <color name="colorSecondary">#ED005C</color>
+    <color name="colorSecondaryLight">#FF0666</color>
+    <color name="colorSecondaryDark">#D00050</color>
+    <color name="colorSecondaryDarker">#A1003E</color>
+
+    <color name="colorComplement">#FF7A00</color>
+    <color name="colorComplementLight">#FF7D06</color>
+    <color name="colorComplementDark">#F07300</color>
+    <color name="colorComplementDarker">#BB5A00</color>
+
+    <color name="colorAccent">#EEE</color>
+
+    <color name="colorSurface">#FEFEFE</color>
+    <color name="colorOnSurface">#303030</color>
+
+    <color name="colorBackground">#FAFAFA</color>
+
+    <color name="textColorPrimary">#101010</color>
+    <color name="textColorSecondary">#606060</color>
+    <color name="textColorOnPrimary">#FEFEFE</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+<!--        -->
+
+    <color name="toolbarIconColor">@color/textColorPrimary</color>
+</resources>

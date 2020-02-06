@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pixman</string>
+
+
+    <string name="home_greeting">Welcome to Pixman!</string>
+    <string name="home_greeting_sub">Choose an image to get started</string>
+</resources>

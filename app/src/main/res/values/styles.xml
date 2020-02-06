@@ -1,0 +1,87 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <!--    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">-->
+    <!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>-->
+    <!--        <item name="colorSecondary">@color/colorSecondary</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/colorSecondaryDark</item>-->
+    <!--        <item name="colorOnSecondary">@color/white</item>-->
+
+    <!--        <item name="colorSurface">@color/colorSurface</item>-->
+    <!--        <item name="colorOnSurface">@color/colorOnSurface</item>-->
+
+    <!--        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>-->
+
+    <!--    </style>-->
+
+    <style name="Theme.Pixman" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryDark</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorSurface">@color/colorBackground</item>
+        <item name="colorOnSurface">@color/textColorPrimary</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="fontFamily">@font/roboto_light</item>
+    </style>
+
+    <style name="Theme.Pixman.Home">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">@bool/lightStatusBar</item>
+
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">@bool/lightStatusBar
+        </item>
+        <item name="android:navigationBarColor" tools:targetApi="o_mr1">@color/colorSurface</item>
+
+<!--        For transitions -->
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <style name="Theme.Pixman.AppAlerts">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="SwitchTheme" parent="@style/Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:textColorPrimaryDisableOnly">@color/textColorPrimary</item>
+        <item name="android:colorControlActivated">#1b5e20</item>
+        <item name="android:colorForeground">@color/textColorSecondary</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
+    </style>
+    <style name="Widget.Pixman.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/colorBackground</item>
+        <item name="android:theme">@style/Theme.Pixman</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.DayNight</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Pixman.Toolbar</item>
+    </style>
+
+    <style name="TextAppearance.Pixman.Toolbar" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="Theme.Pixman.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Pixman.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Pixman.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>
