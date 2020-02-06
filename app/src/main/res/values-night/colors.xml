@@ -7,5 +7,6 @@
 
     <color name="textColorPrimary">#E0E0E0</color>
     <color name="textColorSecondary">#959595</color>
+    <color name="textColorDisabled">#505050</color>
     <color name="textColorOnPrimary">#101010</color>
 </resources>

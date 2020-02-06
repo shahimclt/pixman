@@ -31,6 +31,7 @@
 
     <color name="textColorPrimary">#101010</color>
     <color name="textColorSecondary">#606060</color>
+    <color name="textColorDisabled">#909090</color>
     <color name="textColorOnPrimary">#FEFEFE</color>
 
     <color name="white">#FFFFFF</color>

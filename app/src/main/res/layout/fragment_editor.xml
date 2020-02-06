@@ -7,18 +7,72 @@
     android:layout_height="match_parent"
     android:id="@+id/container">
 
+    <ImageButton
+        android:id="@+id/action_compare"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@color/transparent"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="false"
+        android:tint="@color/textColorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_compare_24dp" />
+
+    <LinearLayout
+        android:id="@+id/history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/history_undo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:tint="@color/textColorDisabled"
+            android:clickable="false"
+            app:srcCompat="@drawable/ic_undo_24dp" />
+
+        <ImageButton
+            android:id="@+id/history_redo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:tint="@color/textColorDisabled"
+            android:clickable="false"
+            app:srcCompat="@drawable/ic_redo_24dp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/action_save"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@color/transparent"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="false"
+        android:tint="@color/textColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_save_24dp" />
+
     <ImageView
         android:id="@+id/patient"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:adjustViewBounds="false"
         android:layout_margin="@dimen/activity_margin"
+        android:adjustViewBounds="false"
         android:elevation="4dp"
         android:src="@drawable/bg_cityscape"
         app:layout_constraintBottom_toTopOf="@+id/tools"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/history" />
 
     <LinearLayout
         android:id="@+id/tools"
@@ -36,6 +90,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
             android:tint="@color/textColorPrimary"
             app:srcCompat="@drawable/ic_flip_24dp"
             />
@@ -46,6 +101,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
             android:tint="@color/textColorPrimary"
             app:srcCompat="@drawable/ic_flip_24dp"
             android:rotation="-90"
@@ -57,7 +113,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/transparent"
-            android:tint="@color/textColorSecondary"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:tint="@color/textColorPrimary"
             app:srcCompat="@drawable/ic_opacity_24dp"
             />
 
@@ -67,7 +124,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/transparent"
-            android:tint="@color/textColorSecondary"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:tint="@color/textColorPrimary"
             app:srcCompat="@drawable/ic_format_color_text_24dp"
             />
     </LinearLayout>
