@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.shahim.pixman.fragment.EditorFragment
 import com.shahim.pixman.fragment.IntroFragment
 
 import kotlinx.android.synthetic.main.activity_home.*
@@ -31,11 +32,7 @@ class HomeActivity : AppCompatActivity(), IntroFragment.OnImagePickedListener {
     }
 
     override fun onImagePicked(image: Uri) {
-        showEditor()
-    }
-
-    private fun showEditor() {
-        
+        supportFragmentManager.beginTransaction().replace(R.id.container, EditorFragment.newInstance(image)).addToBackStack(null).commit()
     }
 
     override fun onAttachFragment(fragment: Fragment) {
