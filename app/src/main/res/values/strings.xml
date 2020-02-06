@@ -4,4 +4,14 @@
 
     <string name="home_greeting">Welcome to Pixman!</string>
     <string name="home_greeting_sub">Choose an image to get started</string>
+
+    <string name="home_intro_prompt">Tap to open an image</string>
+
+    <string name="permission_rat_storage_title">Allow Pixman to access your storage?</string>
+    <string name="permission_rat_storage_message">Storage permission is required for Pixman to be able to import an image</string>
+
+    <string name="permission_rat_storage_denied">Uh oh! We cannot import an image without your permission</string>
+
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_ok">OK</string>
 </resources>
