@@ -44,6 +44,8 @@ class EditorFragment : Fragment() {
     }
 
     companion object {
+        const val TAG = "Editor_Fragment"
+
         fun newInstance(image: Uri): EditorFragment {
             val bundle = Bundle()
             bundle.putString("image_uri", image.toString())

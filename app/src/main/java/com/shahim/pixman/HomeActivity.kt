@@ -30,15 +30,15 @@ class HomeActivity : AppCompatActivity(), IntroFragment.OnImagePickedListener, E
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(app_bar)
-        showIntro()
+        if (savedInstanceState == null) showIntro()
     }
 
     private fun showIntro() {
-        supportFragmentManager.beginTransaction().add(R.id.container, IntroFragment()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.container, IntroFragment(),IntroFragment.TAG).commit()
     }
 
     override fun onImagePicked(image: Uri) {
-        supportFragmentManager.beginTransaction().replace(R.id.container, EditorFragment.newInstance(image)).addToBackStack(null).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.container, EditorFragment.newInstance(image),EditorFragment.TAG).addToBackStack(null).commit()
     }
 
     override fun onImageFinished(image: Uri) {
@@ -64,6 +64,7 @@ class HomeActivity : AppCompatActivity(), IntroFragment.OnImagePickedListener, E
         else if(fragment is EditorFragment) {
             fragment.onImageFinishedListener = this
         }
+        Toast.makeText(this,"Attached: "+fragment.tag,Toast.LENGTH_LONG).show()
     }
 }
 

@@ -24,7 +24,12 @@ import kotlinx.android.synthetic.main.fragment_intro.*
 
 const val PICK_IMAGE = 2
 
+
 class IntroFragment : Fragment() {
+
+    companion object {
+        const val TAG = "Intro_Fragment"
+    }
 
     lateinit var onImagePickedListener: OnImagePickedListener
 
