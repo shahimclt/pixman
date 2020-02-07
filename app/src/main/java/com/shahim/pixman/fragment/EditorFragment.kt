@@ -1,12 +1,15 @@
 package com.shahim.pixman.fragment
 
+import android.Manifest
 import android.R.attr.button
 import android.content.Context
 import android.content.res.ColorStateList
 import android.database.Cursor
 import android.graphics.*
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -14,19 +17,28 @@ import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.CompositePermissionListener
+import com.karumi.dexter.listener.single.PermissionListener
+import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener
 import com.shahim.pixman.R
 import kotlinx.android.synthetic.main.fragment_editor.*
+import java.io.File
+import java.io.FileOutputStream
 
 
 class EditorFragment : Fragment() {
 
-    private lateinit var callback: OnImageFinishedListener
+    lateinit var onImageFinishedListener: OnImageFinishedListener
 
-    fun OnImageFinishedListener(callback: OnImageFinishedListener) {
-        this.callback = callback
-    }
     interface OnImageFinishedListener {
         fun onImageFinished(image: Uri)
     }
@@ -95,6 +107,8 @@ class EditorFragment : Fragment() {
             }
             false
         })
+
+        action_save.setOnClickListener { saveImage() }
     }
 
     private fun toggleOG(og:Boolean) {
@@ -246,6 +260,68 @@ class EditorFragment : Fragment() {
             original, 0, 0, original.width,
             original.height, matrix, true
         )
+    }
+
+    //Saving code
+
+    private fun saveImage() {
+        checkSavePermission {
+            val directory: File =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val folder = File(directory,"Pixman")
+            if(!folder.isDirectory) folder.mkdir()
+            val file = File(folder, "Pixman_" + System.currentTimeMillis() + ".png")
+
+            val outputStream = FileOutputStream(file);
+            workImage.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+
+            outputStream.flush()
+            outputStream.fd.sync()
+            outputStream.close()
+
+            MediaScannerConnection.scanFile(context, arrayOf(file.getAbsolutePath()), null, null)
+
+            onImageFinishedListener.let {  onImageFinishedListener.onImageFinished(Uri.fromFile(file)) }
+        }
+    }
+
+    private fun checkSavePermission(onGrant : () -> Unit) {
+
+        val baseLis: PermissionListener = object : PermissionListener {
+            override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                onGrant()
+            }
+            override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest, token: PermissionToken) {
+                context?.let {
+                    AlertDialog.Builder(it)
+                        .setTitle(R.string.permission_rat_storage_title)
+                        .setMessage(R.string.permission_rat_storage_message_export)
+                        .setNegativeButton(R.string.dialog_button_cancel) { dialog, _ ->
+                            dialog.dismiss()
+                            token.cancelPermissionRequest()
+                        }
+                        .setPositiveButton(R.string.dialog_button_ok){ dialog, _ ->
+                            dialog.dismiss()
+                            token.continuePermissionRequest()
+                        }
+                        .setOnDismissListener { token.cancelPermissionRequest() }
+                        .show()
+                }
+            }
+
+            override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+            }
+        }
+
+        val snackBarLis: PermissionListener = SnackbarOnDeniedPermissionListener.Builder.with(
+            activity?.findViewById(R.id.container) as ViewGroup,
+            R.string.permission_rat_storage_denied_export)
+            .withDuration(5000)
+            .build()
+
+        Dexter.withActivity(activity)
+            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .withListener(CompositePermissionListener(baseLis,snackBarLis)).check()
     }
 }
 

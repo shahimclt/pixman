@@ -26,11 +26,8 @@ const val PICK_IMAGE = 2
 
 class IntroFragment : Fragment() {
 
-    private lateinit var callback: OnImagePickedListener
+    lateinit var onImagePickedListener: OnImagePickedListener
 
-    fun setOnImagePickedListener(callback: OnImagePickedListener) {
-        this.callback = callback
-    }
     interface OnImagePickedListener {
         fun onImagePicked(image: Uri)
     }
@@ -67,7 +64,7 @@ class IntroFragment : Fragment() {
             PICK_IMAGE -> {
                 //data.getData returns the content URI for the selected Image
                 val selectedImage: Uri? = data?.data
-                callback.let { selectedImage?.let { it1 -> callback.onImagePicked(it1) } }
+                onImagePickedListener.let { selectedImage?.let { it1 -> onImagePickedListener.onImagePicked(it1) } }
             }
         }
     }
@@ -82,7 +79,7 @@ class IntroFragment : Fragment() {
                 context?.let {
                     AlertDialog.Builder(it)
                         .setTitle(R.string.permission_rat_storage_title)
-                        .setMessage(R.string.permission_rat_storage_message)
+                        .setMessage(R.string.permission_rat_storage_message_import)
                         .setNegativeButton(R.string.dialog_button_cancel) { dialog, _ ->
                             dialog.dismiss()
                             token.cancelPermissionRequest()
@@ -102,7 +99,7 @@ class IntroFragment : Fragment() {
 
         val snackBarLis: PermissionListener = SnackbarOnDeniedPermissionListener.Builder.with(
             activity?.findViewById(R.id.container) as ViewGroup,
-            R.string.permission_rat_storage_denied)
+            R.string.permission_rat_storage_denied_import)
             .withDuration(5000)
             .build()
 
