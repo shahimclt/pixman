@@ -1,4 +1,4 @@
-# ![alt text](https://github.com/shahimclt/pixman/blob/master/app/src/main/ic_launcher-web.png "Pixman Logo") Pixman
+# ![alt text](https://github.com/shahimclt/pixman/blob/master/app/src/main/res/mipmap-hdpi/ic_launcher_round.png "Pixman Logo") Pixman
 
 PixMan is a powerful image editing app for Android which helps in applying a few image operations on a selected image.
 
