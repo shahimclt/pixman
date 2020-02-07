@@ -100,10 +100,18 @@ class EditorFragment : Fragment() {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     toggleOG(true)
+                    context?.let {
+                        action_compare.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(
+                            context!!,R.color.textColorPrimary))
+                    }
                     return@OnTouchListener true
                 }
                 MotionEvent.ACTION_UP -> {
                     toggleOG(false)
+                    context?.let {
+                        action_compare.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(
+                            context!!,R.color.textColorDisabled))
+                    }
                     return@OnTouchListener true
                 }
             }

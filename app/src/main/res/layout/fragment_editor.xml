@@ -14,7 +14,7 @@
         android:background="@color/transparent"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="false"
-        android:tint="@color/textColorPrimary"
+        android:tint="@color/textColorDisabled"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_compare_24dp" />
@@ -65,7 +65,7 @@
         android:id="@+id/patient"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/activity_margin"
+        android:layout_margin="@dimen/element_spacing"
         android:adjustViewBounds="false"
         android:elevation="4dp"
         android:src="@drawable/bg_cityscape"
