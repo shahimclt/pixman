@@ -2,7 +2,7 @@
 
 PixMan is a powerful image editing app for Android which helps in applying a few image operations on a selected image.
 
-#### Features
+## Features
 
 * Import images from your gallery
 * Flip images vertically or horizontally
@@ -17,7 +17,7 @@ PixMan is a powerful image editing app for Android which helps in applying a few
 * Dark mode support for Android 10
 * Adaptive icons support
 
-#### Some random thoughts
+## Some random thoughts
 
 - This project was coded in Kotlin, which I'm only recently learning. 🤞
 - Opted to go with the _Single Activity|Multiple fragments_ approach.
